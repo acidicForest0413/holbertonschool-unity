@@ -172,3 +172,27 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1035126.393617 seconds.
+  path: Assets
+  artifactKey: Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets using Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a4fe85251aa2e89732c359432baa2c3') in 0.014325 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 572.618658 seconds.
+  path: Assets/Project Settings
+  artifactKey: Guid(abe488deae231114dbd99c3b689b1594) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Project Settings using Guid(abe488deae231114dbd99c3b689b1594) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '188dbb2769267cc4f413cae149f0fdeb') in 0.000613 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 6.690329 seconds.
+  path: Assets/ProjectSettings
+  artifactKey: Guid(abe488deae231114dbd99c3b689b1594) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ProjectSettings using Guid(abe488deae231114dbd99c3b689b1594) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa367ee70a2582aab442c01af5605078') in 0.000902 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
