@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private int score;
     [SerializeField] Rigidbody rb;
     [SerializeField] int StartHealth = 5;
+    [SerializeField] private float respawnDelay = 3;
     Vector3 dir = Vector3.zero;
 
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
         dir = dir.normalized * speed;
@@ -68,8 +69,14 @@ public class PlayerController : MonoBehaviour
             SetHealthText();
             if(health <= 0)
             {
-                Debug.Log("Game Over!");
-                UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+                //Debug.Log("Game Over!");
+                
+                WinText.color = Color.white;
+                WinText.text = "Game Over";
+                WinLoseBG.color = Color.red;
+                WinLoseBG.gameObject.SetActive(true);
+                StartCoroutine(LoadScene(respawnDelay));
+                //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
                 return;
             }
         }
@@ -79,7 +86,12 @@ public class PlayerController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Goal"))
             return;
-        Debug.Log("You win!");
+        //Debug.Log("You win!");
+        WinText.color = Color.black;
+        WinText.text = "You Win!";
+        WinLoseBG.color = Color.green;
+        WinLoseBG.gameObject.SetActive(true);
+        StartCoroutine(routine: LoadScene(respawnDelay));
     }
 
     void SetScoreText()
@@ -98,7 +110,7 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("Health: " + health);
         }
-        
+        healthText.text = $"Health: {health}";
     }
 
     void ShowWinScreen()
@@ -122,7 +134,9 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator LoadScene(float seconds)
     {
+        Debug.Log("Seconds: " + seconds);
         yield return new WaitForSeconds(seconds);
+        Debug.Log("Ready to transition scenes");
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
