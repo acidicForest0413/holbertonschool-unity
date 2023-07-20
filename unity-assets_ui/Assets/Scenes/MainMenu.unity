@@ -1253,10 +1253,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1540903646}
     m_Modifications:
-    - target: {fileID: 342336699585892508, guid: f061769faed31044e904d3d5b6f14767, type: 3}
-      propertyPath: m_Name
-      value: OptionsText
-      objectReference: {fileID: 0}
     - target: {fileID: 665872012854646133, guid: f061769faed31044e904d3d5b6f14767, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1345,13 +1341,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionsButton
       objectReference: {fileID: 0}
-    - target: {fileID: 7452004236651098930, guid: f061769faed31044e904d3d5b6f14767, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 95b178cf9a1c7024ba4dc9a393f3769e, type: 2}
-    - target: {fileID: 7452004236651098930, guid: f061769faed31044e904d3d5b6f14767, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -8890428994660537619, guid: 95b178cf9a1c7024ba4dc9a393f3769e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f061769faed31044e904d3d5b6f14767, type: 3}
