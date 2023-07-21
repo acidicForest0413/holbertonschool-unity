@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 89291216}
   - component: {fileID: 89291220}
   - component: {fileID: 89291221}
+  - component: {fileID: 89291222}
   m_Layer: 5
   m_Name: OptionsCanvas
   m_TagString: Untagged
@@ -488,6 +489,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb3888b2fd0134419a5cfebfb049852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &89291222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89291215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab140f40ae1e2fb4fa6b291999d490b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCamera: {fileID: 0}
+  ySpeed: -0.01
+  xSpeed: 1
+  isInverted: 0
 --- !u!1 &171461028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,7 +1885,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1285167649}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1412262717
 GameObject:

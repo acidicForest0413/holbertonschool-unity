@@ -9300,6 +9300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4540354353946866357, guid: 79c1250688f92d64abfc9b14b8385d69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4540354353946866361, guid: 79c1250688f92d64abfc9b14b8385d69, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9457,6 +9461,7 @@ MonoBehaviour:
   myCamera: {fileID: 963194227}
   ySpeed: -0.01
   xSpeed: 1
+  isInverted: 0
 --- !u!114 &5499293567769663090
 MonoBehaviour:
   m_ObjectHideFlags: 0
