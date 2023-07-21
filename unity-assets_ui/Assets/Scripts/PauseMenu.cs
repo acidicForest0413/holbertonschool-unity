@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,8 @@ public class PauseMenu : MonoBehaviour
 {
     public UnityEvent<bool> ToggleMenu;
     public UnityEvent<bool> ToggleMenuInverted;
+    private bool isPaused = false;
+    public GameObject pauseCanvas;
 
     public void OnEnable()
     {
@@ -40,12 +43,27 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        gameObject.SetActive(true);
+        pauseCanvas.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
     }
 
     public void Resume()
     {
         gameObject.SetActive(false);
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+    }
 }
