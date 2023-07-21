@@ -24,13 +24,13 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         OptionsMenu.lastScene = 0;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(3);
     }
 
     public void Options()
     {
         OptionsMenu.lastScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(4);
     }
 
     public void Restart()
