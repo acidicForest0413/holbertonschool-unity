@@ -50,8 +50,10 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        gameObject.SetActive(false);
-    }
+        pauseCanvas.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    } 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
