@@ -8541,7 +8541,7 @@ GameObject:
   - component: {fileID: 1946645217}
   - component: {fileID: 1946645216}
   m_Layer: 0
-  m_Name: CustsceneCamera
+  m_Name: CutsceneCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
