@@ -8541,7 +8541,7 @@ GameObject:
   - component: {fileID: 1946645217}
   - component: {fileID: 1946645216}
   m_Layer: 0
-  m_Name: Custscene Camera
+  m_Name: CustsceneCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8557,7 +8557,7 @@ Animator:
   m_GameObject: {fileID: 1946645215}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0d1b9fe0983b64848bcd78cc0a5516e2, type: 2}
+  m_Controller: {fileID: 9100000, guid: d15b114a485ea6d429ed14469106af62, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
