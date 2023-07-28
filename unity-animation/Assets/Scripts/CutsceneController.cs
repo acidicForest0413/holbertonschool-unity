@@ -6,6 +6,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Animator))]
 public class CutsceneController : MonoBehaviour
 {
+    public GameObject Player;
     public Animator animator;
     public UnityEvent OnAnimationEnd, OnAnimationStart;
     // Start is called before the first frame update
@@ -18,6 +19,13 @@ public class CutsceneController : MonoBehaviour
     public void AnimationEnd()
     {
         OnAnimationEnd.Invoke();
+    }
+
+    IEnumerator FinishCut()
+    {
+        yield return new WaitForSeconds(2);
+        Player.GetComponent<PlayerController>().enabled = true;
+        Player.GetComponent<CameraController>().enabled = true;
     }
 
 }
