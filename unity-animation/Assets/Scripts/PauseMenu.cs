@@ -1,59 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public UnityEvent<bool> ToggleMenu;
-    public UnityEvent<bool> ToggleMenuInverted;
-    private bool isPaused = false;
     public GameObject pauseCanvas;
+    private bool isPaused = false;
 
-    public void OnEnable()
-    {
-        ToggleMenuInverted.Invoke(false);
-        ToggleMenu.Invoke(true);
-    }
-
-    public void OnDisable()
-    {
-        ToggleMenuInverted.Invoke(true);
-        ToggleMenu.Invoke(false);
-    }
-
-    public void MainMenu()
-    {
-        OptionsMenu.lastScene = 0;
-        SceneManager.LoadScene(3);
-    }
-
-    public void Options()
-    {
-        OptionsMenu.lastScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(4);
-    }
-
-    public void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void Pause()
-    {
-        pauseCanvas.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
-    }
-
-    public void Resume()
-    {
-        pauseCanvas.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
-    } 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -67,5 +21,38 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
+    }
+
+    public void Resume()
+    {
+        pauseCanvas.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    public void Pause()
+    {
+        pauseCanvas.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    // Added functions
+    public void Restart()
+    {
+        Time.timeScale = 1f; // Unpause time
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1f; // Unpause time
+        SceneManager.LoadScene("MainMenu"); // Load the MainMenu scene
+    }
+
+    public void Options()
+    {
+        Time.timeScale = 1f; // Unpause time
+        SceneManager.LoadScene("Options"); // Load the Options scene
     }
 }

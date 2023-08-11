@@ -5,27 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-
-    public void LevelSelect(int targetSceneIndex)
+    public void LevelSelect(int level)
     {
-        OptionsMenu.lastScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(targetSceneIndex);
+        switch(level)
+        {
+            case 1:
+                SceneManager.LoadScene("Level01");
+                break;
+            case 2:
+                SceneManager.LoadScene("Level02");
+                break;
+            case 3:
+                SceneManager.LoadScene("Level03");
+                break;
+            default:
+                Debug.Log("Invalid level number");
+                break;
+        }
     }
 
     public void Options()
     {
-        OptionsMenu.lastScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Options");
     }
 
-    public void Exit()
+    public void ExitButton()
     {
         Debug.Log("Exited");
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
         Application.Quit();
-#endif
     }
-
 }

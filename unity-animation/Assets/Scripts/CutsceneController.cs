@@ -1,31 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(Animator))]
 public class CutsceneController : MonoBehaviour
 {
-    public GameObject Player;
-    public Animator animator;
-    public UnityEvent OnAnimationEnd, OnAnimationStart;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject mainCamera;
+    public GameObject player;       
+    public GameObject timerCanvas;
+    private Animator animator;
+    private PlayerController playerController;
+
+    private void Start()
     {
         animator = GetComponent<Animator>();
-        OnAnimationStart.Invoke();
+        playerController = player.GetComponent<PlayerController>();
+        
+        // Initialization
+        mainCamera.SetActive(false);
+        playerController.enabled = false;
+        timerCanvas.SetActive(false);
     }
 
-    public void AnimationEnd()
+    private void Update()
     {
-        OnAnimationEnd.Invoke();
-    }
+        // Check if the Level01 animation has finished playing
+        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !animator.IsInTransition(0))
+        {
+            // Enable Main Camera
+            mainCamera.SetActive(true);
+            
+            // Disable Cutscene Camera
+            gameObject.SetActive(false);
+            
+            // Enable PlayerController
+            playerController.enabled = true;
 
-    IEnumerator FinishCut()
-    {
-        yield return new WaitForSeconds(2);
-        Player.GetComponent<PlayerController>().enabled = true;
-        Player.GetComponent<CameraController>().enabled = true;
-    }
+            // Enable TimerCanvas but don't start it
+            timerCanvas.SetActive(true);
 
+            // Disable CutsceneController script
+            this.enabled = false;
+        }
+    }
 }

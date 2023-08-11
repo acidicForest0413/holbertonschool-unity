@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WinTrigger : MonoBehaviour
 {
+    public Timer timer;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        Timer otherTimer = other.GetComponent<Timer>();
-        if (otherTimer != null)
-            otherTimer.enabled = false;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            timer.startTimer = false; // Stop the timer
+            
+            timer.timerText.fontSize = 60; // Change the font size
+            timer.timerText.color = Color.green; // Change the color to green
+        }
     }
 }

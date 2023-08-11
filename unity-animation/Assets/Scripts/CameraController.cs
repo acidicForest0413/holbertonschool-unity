@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] Camera myCamera;
-    [SerializeField] float ySpeed = -0.01f, xSpeed = 1;
+    public GameObject player;
+    public float turnSpeed = 4.0f;
+    private bool isInverted = false;
+    private Vector3 offset;
 
-    public bool isInverted = false;
-    Vector3 Offset, rotOffset;
-    float theta = 0;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        if (myCamera == null)
-            myCamera = Camera.main;
-        if (PlayerPrefs.HasKey("Y_Invert"))
-            isInverted = PlayerPrefs.GetInt("Y_Invert") == 1;
-        Offset = myCamera.transform.position - transform.position;
-        rotOffset = myCamera.transform.rotation.eulerAngles - transform.rotation.eulerAngles;
+        // Load the isInverted setting
+        isInverted = PlayerPrefs.GetInt("InvertY", 0) == 1;
+
+        offset = new Vector3(player.transform.position.x, player.transform.position.y + 8.0f, player.transform.position.z - 8.0f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
-        int invert = 1;
+        offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
+
+        // Y-axis inversion
         if (isInverted)
-            invert = -1;
-        theta += Input.GetAxis("Mouse Y") * ySpeed * invert;
-        theta = Mathf.Clamp(theta, 0, 90f);
-        transform.Rotate(0, Input.GetAxis("Mouse X") * xSpeed, 0);
-        myCamera.transform.position =  (transform.position + (transform.rotation * Quaternion.Euler(theta, 0, 0) * Offset));
-        myCamera.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + rotOffset + (Vector3.right * theta));
-        
+        {
+            offset = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * turnSpeed, Vector3.right) * offset;
+        }
+        else
+        {
+            offset = Quaternion.AngleAxis(-Input.GetAxis("Mouse Y") * turnSpeed, Vector3.right) * offset;
+        }
+
+        transform.position = player.transform.position + offset; 
+        transform.LookAt(player.transform.position);
     }
 }

@@ -1,97 +1,117 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Vector3 desiredDirection = Vector2.zero;
-    [SerializeField] CameraController forwardDirection;
-    [SerializeField] float acceleration = 5.0f, maxSpeed = 5.0f, jumpForce = 5.0f, maxFallSpeed = 4.0f;
-    CharacterController characterController = null;
-    bool JumpDesired = false;
-    Vector3 velocity = Vector3.zero;
-    [SerializeField] Vector3 startPos;
-    [SerializeField] float deathHeight = -10.0f, respawnHeight = 5.0f;
-    public UnityEvent MenuToggle;
+    public float speed = 5.0f;
+    public float jumpForce = 2.0f;
+    public Transform groundCheck;
+    public float groundCheckRadius;
+    public LayerMask groundLayer;
+    public Vector3 respawnPoint;
 
-    [SerializeField] Animator myAnimator;
+    private Vector3 direction;
+    private Rigidbody rb;
+    private Transform cameraTransform;
+    private bool jump = false;
+    private bool isGrounded;
+    private bool canJump = true; 
+    private Animator anim;
+    private float fallingTime = 0f;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
-        startPos = transform.position;
+        cameraTransform = Camera.main.transform;
+        rb = GetComponent<Rigidbody>();
+        respawnPoint = transform.position;
+        anim = GetComponentInChildren<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        GetInput();
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
+        // Use camera forward for direction
+        Vector3 moveDirection = cameraTransform.forward * moveVertical + cameraTransform.right * moveHorizontal;
+        moveDirection.y = 0; 
+        moveDirection.Normalize();
+
+        rb.AddForce(moveDirection * speed);
+
+        // Character Rotation to Face Movement Direction
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion rotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, speed * Time.deltaTime);
+        }
+
+        // Animation Handling
+        bool isMoving = moveDirection.magnitude > 0.1f;
+        anim.SetBool("IsMoving", isMoving);
+
+        // Ground Check and Jumping Logic
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+
+        // Falling Logic
+        if (!isGrounded && rb.velocity.y < 0)
+        {
+            fallingTime += Time.deltaTime;  // Increment the falling time
+
+            if(fallingTime >= 1f)
+            {
+                Debug.Log("Character is Falling!");
+                anim.SetBool("IsFalling", true);
+            }
+}
+else
+{
+    fallingTime = 0f;  // Reset the falling time
+    anim.SetBool("IsFalling", false);
+}
+
+        if (Input.GetButtonDown("Jump") && isGrounded && canJump)
+        {
+            jump = true;
+            anim.SetBool("IsJumping", true); 
+            canJump = false;
+            StartCoroutine(EnableJump());
+            isGrounded = false;
+        }
+
+        if (isGrounded)
+        {
+            anim.SetBool("IsJumping", false);
+            Debug.Log("Character is Grounded!");
+        }
+
+        // Respawn Logic
+        if (transform.position.y < -10)
+        {
+            Respawn();
+        }
     }
 
-    // Fixed Update is called once per physics update
+    IEnumerator EnableJump()
+    {
+        yield return new WaitForSeconds(0.1f); 
+        canJump = true;
+    }
+
     void FixedUpdate()
     {
-        HandleMove();
-        if (IsDead())
-            Respawn();
-        HandleAnimation();
-    }
-
-    void GetInput()
-    {
-        if (Input.GetButtonDown("Cancel"))
-            MenuToggle.Invoke();
-        desiredDirection = Vector3.zero;
-        desiredDirection.x = Input.GetAxis("Horizontal");
-        desiredDirection.z = Input.GetAxis("Vertical");
-        desiredDirection.Normalize();
-        JumpDesired = JumpDesired || (Input.GetButton("Jump") && characterController.isGrounded);
-    }
-
-    void HandleMove()
-    {
-        Vector3 Delta = (desiredDirection * maxSpeed) - velocity;
-        Delta.y = 0.0f;
-        velocity += Delta * acceleration * Time.deltaTime;
-        velocity.y = Mathf.Clamp(velocity.y, -maxFallSpeed, jumpForce * 2);
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-        if (JumpDesired && characterController.isGrounded)
+        if (jump)
         {
-            velocity.y = jumpForce;
-            JumpDesired = false;
+            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+            jump = false;
         }
-        else
-        {
-            if (!characterController.isGrounded)
-                velocity.y -= acceleration * Time.deltaTime;
-            else
-                velocity.y = 0.0f;
-        }
-
-        //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation,Quaternion.Euler(forwardDirection.GetDirection()),Time.deltaTime * velocity.magnitude);
-        characterController.Move((transform.rotation * velocity) * Time.deltaTime);
     }
 
-    bool IsDead()
-    {
-        return transform.position.y < deathHeight;
-    }
-
-    void HandleAnimation()
-    {
-        if (myAnimator == null)
-            return;
-        myAnimator.SetFloat("Speed", velocity.magnitude);
-        myAnimator.SetBool("Grounded", characterController.isGrounded);
-        
-    }
     void Respawn()
     {
-        transform.position = startPos + Vector3.up * respawnHeight;
-        transform.rotation = Quaternion.identity;
+        transform.position = respawnPoint + new Vector3(0, 10, 0);
+        rb.velocity = Vector3.zero;
     }
 }
