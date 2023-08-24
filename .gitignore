@@ -70,3 +70,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+*.x86_64
+*.x86_64
+*.info
+unity-animation/Buildss/Linbuild/Platformer_Linux_x86_64.zip.x86_64
+unity-animation/Buildss/Linbuild/Platformer_Linux_x86_64.zip_Data/app.info
